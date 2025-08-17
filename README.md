@@ -17,3 +17,4 @@ This repository provides a Vagrant configuration for quickly provisioning an Ubu
 ## Notes
 - The `.vagrant` directory and all log files are excluded from version control via `.gitignore`.
 - You can customize the provision script in the `Vagrantfile` as needed for your project.
+
