@@ -25,12 +25,16 @@ Vagrant.configure("2") do |config|
                      curl openssl cmake git autoconf libtool libgflags-dev libgtest-dev clang libc++-dev \
                      libgrpc++-dev protobuf-compiler-grpc protobuf-compiler libabsl-dev libpqxx-dev libprotobuf-dev
 
+      # Add host entries for VM communication
+      echo "192.168.56.10 ubuntu-dev-server dev-server" >> /etc/hosts
+      echo "192.168.56.11 postgres-server pg-server" >> /etc/hosts
+
       #download latest version of abseil, compile and install
-      cd /tmp && git clone https://github.com/abseil/abseil-cpp.git
-      cd /tmp/abseil-cpp && git tag | grep -E "2023|2024" | tail -5   
-      cd /tmp/abseil-cpp && git checkout 20240722.0
-      cd /tmp/abseil-cpp && mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=$HOME/.local -DCMAKE_BUILD_TYPE=Release -DABSL_BUILD_TESTING=OFF -DABSL_USE_EXTERNAL_GOOGLETEST=ON ..
-      cd /tmp/abseil-cpp/build && make install
+      # cd /tmp && git clone https://github.com/abseil/abseil-cpp.git
+      # cd /tmp/abseil-cpp && git tag | grep -E "2023|2024" | tail -5   
+      # cd /tmp/abseil-cpp && git checkout 20240722.0
+      # cd /tmp/abseil-cpp && mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=$HOME/.local -DCMAKE_BUILD_TYPE=Release -DABSL_BUILD_TESTING=OFF -DABSL_USE_EXTERNAL_GOOGLETEST=ON ..
+      # cd /tmp/abseil-cpp/build && make install
       
     SHELL
   end
@@ -51,6 +55,10 @@ Vagrant.configure("2") do |config|
       #set -e
       apt update
       apt install -y postgresql postgresql-contrib postgresql-client
+      
+      # Add host entries for VM communication
+      echo "192.168.56.10 ubuntu-dev-server dev-server" >> /etc/hosts
+      echo "192.168.56.11 postgres-server pg-server" >> /etc/hosts
       
       # Configure PostgreSQL
       sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'postgres';"
